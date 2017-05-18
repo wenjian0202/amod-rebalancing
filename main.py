@@ -20,15 +20,18 @@ dqn = DQNAgent(model=model, nb_actions=nb_actions, memory=memory, nb_steps_warmu
                target_model_update=1e-2, policy=policy)
 dqn.compile(Adam(lr=1e-3), metrics=['mae'])
 
+dqn.fit(env, nb_steps=10000, visualize=False, verbose=2)
+dqn.save_weights('dqn_weights.h5f', overwrite=True)
+
 runtime = []
 waittime = []
 vehtime = []
 servtime = []
 rebltime = []
 
-for _ in range(1):
+for _ in range(20):
     amod = AMoD(5, demand, V=20)
-    dqn.load_weights('dqn_weights.h5f')
+    # dqn.load_weights('dqn_weights.h5f')
     
     stime = time.time()
     amods = []

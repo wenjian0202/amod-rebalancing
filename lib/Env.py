@@ -27,7 +27,7 @@ class RebalancingEnv(gym.Env):
     """ 
     def __init__(self, amod):
         self.amod = amod
-        self.amods = []
+        # self.amods = []
         self.N = 5
         self.c = 0.1
         self.dT = 5.0
@@ -43,7 +43,7 @@ class RebalancingEnv(gym.Env):
         lat_, lng_ = self.get_vehicle_location()
         self.act(action)
         self.amod.dispatch_at_time(self.amod.T + self.dT)
-        self.amods.append( copy.deepcopy(self.amod) )
+        # self.amods.append( copy.deepcopy(self.amod) )
         reward = 0 if action == 0 else self.penalty
         if not self.is_vehicle_idle():
             lat, lng = self.get_vehicle_location()
@@ -54,8 +54,8 @@ class RebalancingEnv(gym.Env):
             self.Q_count += t_ - t
             while not self.is_vehicle_idle():
                 self.amod.dispatch_at_time(self.amod.T + self.dT)
-                self.amods.append( copy.deepcopy(self.amod) )
-        print("step %d: Q: %2f; action: %s; reward: %.2f" % (self.setp_count, self.Q_count,
+                # self.amods.append( copy.deepcopy(self.amod) )
+        print("step %d: Q: %.2f; action: %s; reward: %.2f" % (self.setp_count, self.Q_count,
                                                      "noop" if action == 0 else 
                                                      "right" if action == 1 else
                                                      "left" if action == 2 else
@@ -71,7 +71,7 @@ class RebalancingEnv(gym.Env):
     
     def reset(self):
         self.update_state()
-        self.amods.append( copy.deepcopy(self.amod) )
+        # self.amods.append( copy.deepcopy(self.amod) )
         return self.state
     
     def get_vehicle(self, i=0):
